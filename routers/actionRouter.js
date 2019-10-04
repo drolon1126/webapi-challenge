@@ -1,7 +1,6 @@
 const express = require('express');
 
 const db = require('../data/helpers/actionModel.js');
-const pDb = require('../data/helpers/projectModel.js');
 
 const router = express.Router();
 
@@ -75,18 +74,8 @@ function validateAction(req, res, next) {
   }
   if(!req.body.project_id)
     res.status(400).json({ errorMessage: "Please provide a project_id" });
-  else {
-    pDb.get(req.body.project_id)
-    .then(project=>{
-      if(!project)
-        res.status(404).json({errorMessage: 'project with project_id does not exist'})
-    })
-    .catch(()=>{
-      res.status(400).json({ errorMessage: "invalid project id" });
-    });
-  }
   
-  next();    
+  next(); 
 };
 
 module.exports = router;
